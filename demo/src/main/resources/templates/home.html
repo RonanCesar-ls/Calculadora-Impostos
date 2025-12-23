@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de Impostos</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+        .resultado { background-color: #e0ffe0; padding: 15px; margin-top: 20px; border-radius: 5px; }
+        input { padding: 8px; margin: 5px 0; width: 100%; }
+        button { background-color: #28a745; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+
+<h1>💰 Calculadora de Impostos</h1>
+
+<form action="#" th:action="@{/calcular}" th:object="${imposto}" method="post">
+
+    <label>Valor Base (R$):</label>
+    <input type="number" step="0.01" th:field="*{valorBase}" placeholder="Ex: 1000.00" required />
+
+    <label>Alíquota (%):</label>
+    <input type="number" step="0.1" th:field="*{aliquota}" placeholder="Ex: 27.5" required />
+
+    <br><br>
+    <button type="submit">Calcular Agora</button>
+</form>
+
+<div th:if="${resultadoImposto != null}" class="resultado">
+    <h3>Resultado:</h3>
+    <p>Imposto a Pagar: <strong>R$ <span th:text="${resultadoImposto}"></span></strong></p>
+    <p>Valor Total (Base + Imposto): <strong>R$ <span th:text="${resultadoTotal}"></span></strong></p>
+</div>
+
+</body>
+</html>
