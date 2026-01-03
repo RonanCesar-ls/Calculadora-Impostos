@@ -1,21 +1,44 @@
 package ImpostosIRPF.example.demo.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import lombok.Data;
 
 import java.math.BigDecimal;
 
-@Data
 public class RendimentoDTO {
 
-    @NotBlank (message = "A descrição e obrigatória ")
     private String descricao;
-
-    @NotNull
-    private String tipoRenda; // "CLT, DIVIDENDO" mais ????
-
-    @Positive(message = "O valor deve ser positivo")
     private BigDecimal valor;
+    private String tipoRenda;
+
+    public RendimentoDTO(){}
+
+    public RendimentoDTO(String descricao, BigDecimal valor, String tipoRenda) {
+        this.descricao = descricao;
+        this.valor = valor;
+        this.tipoRenda = tipoRenda;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public String getTipoRenda() {
+        return tipoRenda;
+    }
+
+    public void setTipoRenda(String tipoRenda) {
+        this.tipoRenda = tipoRenda;
+    }
 }
+
