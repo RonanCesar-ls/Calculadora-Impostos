@@ -15,6 +15,9 @@ public class Rendimento {
 
     private String descricao;
 
+    private String faixaImposto;
+    private BigDecimal aliquotaEfetiva;
+
     @Enumerated(EnumType.STRING)
     private TipoRenda tipo; // Enum CLT, DIVIDENDO,FII, SWING_TRADE
 
