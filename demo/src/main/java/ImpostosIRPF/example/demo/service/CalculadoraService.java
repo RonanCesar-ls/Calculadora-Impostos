@@ -7,6 +7,7 @@ import ImpostosIRPF.example.demo.entity.TipoRenda;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Service
 public class CalculadoraService {
@@ -21,6 +22,9 @@ public class CalculadoraService {
 
         BigDecimal imposto = calcularImpostoPorTipo(tipo, dto.getValor());
         rendimento.setImpostoDevido(imposto);
+
+        rendimento.setFaixaImposto(identificarFaixa(dto.getValor()));
+        rendimento.setAliquotaEfetiva(calcularAliquotaEfetiva(imposto, dto.getValor()));
 
         return rendimento;
     }
@@ -39,6 +43,22 @@ public class CalculadoraService {
 
             default:
                 return BigDecimal.ZERO;
+        }
+    }
+
+    private BigDecimal calcularAliquotaEfetiva(BigDecimal imposto, BigDecimal valorTotal){
+        if(valorTotal.compareTo(BigDecimal.ZERO) == 0 ) return BigDecimal.ZERO;
+
+        return imposto.divide(valorTotal, 4, RoundingMode.HALF_UP)
+                .multiply(new BigDecimal("100"))
+                .setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private String identificarFaixa(BigDecimal valor){
+        if (valor.doubleValue() <= 5000){
+            return "isento";
+        }else {
+            return "Teto Máximo (27.5%)";
         }
     }
 
